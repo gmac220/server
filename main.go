@@ -11,6 +11,7 @@ import (
 )
 
 var myCount = expvar.NewInt("my.count")
+var myStatus = expvar.NewString("my.status")
 
 func main() {
 	http.Handle("/", http.FileServer(http.Dir(".")))
@@ -59,6 +60,7 @@ var hellotmpl = template.Must(template.New(".").Parse(hellotemplate))
 
 func hellotemphandler(response http.ResponseWriter, request *http.Request) {
 	myCount.Add(1)
+	myStatus.Set("Good")
 	hellotmpl.Execute(response, map[string]interface{}{
 		"Name": "Bob",
 	})
